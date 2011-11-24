@@ -1,0 +1,548 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+    Document   : welcomeICEfaces
+    Created on : 20/09/2011, 01:50:55 PM
+    Author     : USUARIO
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">
+    <h:head>
+        <title>ICAPTU</title>
+        <link rel="stylesheet" type="text/css" href="./xmlhttp/css/rime/rime.css"/>
+    </h:head>
+    <h:body styleClass="ice-skin-rime">
+
+        <h:form id="form">
+
+            <ice:panelBorder width="100%" >
+                <f:facet name="north" >
+                    <ice:panelGroup style="text-align:right;color: blue; background-image: url(Imagenes/Panelplaya.jpg);height: 130px" >
+                            <ice:outputText style="color: beige" value="Sesion de: #{controlUsuarios.auxiliar.nombre}" ></ice:outputText><br />
+                            <ice:outputText style="color: beige" value="#{controlUsuarios.auxiliar.perfil}" ></ice:outputText>
+                    </ice:panelGroup>
+                </f:facet>
+
+                <f:facet name="west" >
+                    <ice:panelGroup style="padding:6px;width:120px ;height: 500px"  >
+                        <ice:repeat var="playa" value="#{controlPlayas.playas}" >
+
+                            <ice:panelCollapsible style="width: 159px;text-align: center">
+                                <f:facet name="header" >
+                                    <ice:panelGroup title="#{playa.descripcion}" >
+                                        <ice:outputText value="#{playa.nombre}"   ></ice:outputText>
+                                    </ice:panelGroup>
+                                </f:facet>
+
+                                <h:commandLink actionListener="#{controlPuntoMuestreo.ListarPuntosdePlaya}" rendered="true"
+                                               immediate="true">
+                                    <ice:graphicImage width="100" height="50" value="imagenPlaya.jsp?codigo=#{playa.codigo}"></ice:graphicImage><br />
+                                    <ice:outputText value="#{playa.ubicacion}" ></ice:outputText><br />
+                                    <f:param name="codplaya" value="#{playa.codigo}"/>
+
+                                </h:commandLink>
+                                <br />
+                            </ice:panelCollapsible>
+                        </ice:repeat>
+                    </ice:panelGroup>
+
+
+                </f:facet>
+
+                <f:facet name="center" >
+                    <ice:panelGroup style="padding:6px">
+                        <!--<ice:commandButton value="Visualizar" actionListener="#{controlPuntoMuestreo.visualizar}"/>-->
+                        <!--<ice:commandButton value="Ocultar" actionListener="#{controlPuntoMuestreo.ocultar}"/>-->
+                        <div style="left: 300px;position: absolute" >
+                        <ice:panelSeries var="pm" value="#{controlPuntoMuestreo.puntosMuestreo}">
+                            <h:panelGrid columns="3" >
+                                <ice:panelGroup draggable="true" >
+
+                                       
+                                       <ice:commandLink actionListener="#{controlPuntoMuestreo.visualizar}">
+                                            
+                                           <h:outputText value="#{pm.codigo} = "/><h:outputText value="#{pm.descripcion}"/><br />
+                                           <ice:graphicImage url="Imagenes/IPuntoMuestreo.png" width="100" height="60" value="#{pm.descripcion}" title="#{pm.descripcion}" ></ice:graphicImage><br />
+                                           <f:param name="codigoPm" value="#{pm.codigo}"></f:param>
+
+                                       </ice:commandLink>
+
+
+                                </ice:panelGroup>
+                            </h:panelGrid>
+                        </ice:panelSeries>                       
+                            </div>
+                        <ice:panelPopup 
+                            modal="true"
+                            rendered="#{controlPuntoMuestreo.show}"
+                            style="top: 200px; left: 400px; width: 600px; height: 610px;  background: #FFFFFF;">
+
+                            <f:facet name="header"  >
+                                <h:panelGrid id="popupHeader2" width="600px"  cellpadding="0" cellspacing="0" columns="3" >
+                                    <h:graphicImage id="popupIcon2" value="Imagenes/iimuestra.png" />
+                                    <h:outputText value="Registro de Muestras"/>
+                                    <h:commandButton id="popupClose2" type="button" image="Imagenes/cerrar.png"
+                                                     actionListener="#{controlPuntoMuestreo.ocultar}" style="cursor: pointer;"/>
+                                </h:panelGrid>
+                            </f:facet>
+                            <f:facet name="body">
+
+                                 <ice:menuBar orientation="horizontal" >
+                                    <ice:menuItem value="Densidad de usuarios" actionListener="#{controlOpnciones.mostrarDensidad}" >
+                                    </ice:menuItem>
+                                    <ice:menuItem value="Residuos solidos" actionListener="#{controlOpnciones.mostrarRSolidos}" >
+                                    </ice:menuItem>
+                                </ice:menuBar>
+                               
+
+                                <h:panelGrid id="popupBody2" width="100%"  cellpadding="0" cellspacing="0"  >
+
+                                    <ice:panelLayout layout="relative" style="width: 600px;height: 100%" >
+
+                                        <div align="center" >
+
+                                            <ice:dataTable rows="1" rendered="#{controlOpnciones.mostDensidad}">
+                                                <ice:column  >
+                                                            <f:facet name="header" >
+                                                                     <ice:outputText value="Fecha" />
+                                                             </f:facet>                                                            
+                                                            <f:facet name="footer" >
+                                                                <ice:selectInputDate id="calendar1" popupDateFormat="EEEEE, MM/dd/yyyy"
+                                                                                          value="#{controlMuestraDensidad.fecha}" renderAsPopup="true" />
+                                                                    <h:message style="color: red" for="calendar1"/>
+                                                             </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Horario" />
+                                                            </f:facet>
+                                                            <f:facet name="footer">
+                                                                    <!--<ice:outputText value="Horario:" ></ice:outputText>-->
+                                                                    <ice:inputText value="#{controlMuestraDensidad.horario}" size="8" ></ice:inputText>
+                                                            </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Numero de Turistas" />
+                                                            </f:facet>
+                                                            <f:facet name="footer">
+                                                                    <!--<ice:outputText value="Numero de Turistas:" ></ice:outputText>-->
+                                                                    <ice:inputText value="#{controlMuestraDensidad.nTuristas}" size="8"></ice:inputText>
+                                                            </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Numero de Vendedores" />
+                                                            </f:facet>
+                                                            <f:facet name="footer">
+                                                                    <!--<ice:outputText value="Numero de Vendedores:" ></ice:outputText>-->
+                                                                    <ice:inputText value="#{controlMuestraDensidad.nVendedores}" size="8"></ice:inputText>
+                                                            </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Numero de Autoridades" />
+                                                            </f:facet>
+                                                            <f:facet name="footer">
+                                                                    <!--<ice:outputText value="Numero de Autoridades:" ></ice:outputText>-->
+                                                                    <ice:inputText value="#{controlMuestraDensidad.nAutoridades}" size="8"></ice:inputText>
+                                                            </f:facet>
+                                                    </ice:column>
+                                                     <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Accion" />
+                                                            </f:facet>
+                                                            <f:facet name="footer">
+                                                                    <f:param name="codAux" value="#{controlUsuarios.identificacion}" />
+                                                                    <ice:commandButton id="regMuestra" actionListener="#{controlMuestraDensidad.registrarMuestra}" value="Registrar" style="z-index:2;"/>
+                                                                    <ice:commandButton id="closeModal" actionListener="#{controlPuntoMuestreo.ocultar}" value="Close" style="z-index:2;"/>
+                                                            </f:facet>
+                                                    </ice:column>
+                                                </ice:dataTable>
+
+                                        </div>
+                                        <div align="center">
+                                            <ice:dataPaginator id="pagM" for="tMuestras" paginator="true" rendered="true" >
+                                                </ice:dataPaginator>
+                                                    <ice:dataTable rendered="#{controlOpnciones.mostDensidad}"
+                                                        var="muestras"
+                                                        value="#{controlMuestraDensidad.listamuestras}"
+                                                         id="tMuestras"
+                                                         rows="10">
+
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Fecha" />
+                                                                 </f:facet>
+                                                            <ice:outputText value="#{muestras.fecha}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Horario" />
+                                                                </f:facet>
+                                                            <ice:outputText value="#{muestras.horario}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Turistas" />
+                                                                </f:facet>
+                                                            <ice:outputText value="#{muestras.numeroTuristas}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Vendedores" />
+                                                                </f:facet>
+                                                            <ice:outputText value="#{muestras.numeroVendedores}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Autoridades" />
+                                                                </f:facet>
+                                                            <ice:outputText value="#{muestras.numeroAutoridades}" />
+
+                                                        </ice:column>
+                                                         <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Densidad" />
+                                                                </f:facet>
+                                                             <ice:outputText value="#{muestras.densidadUsuarios}" />
+
+                                                        </ice:column>
+                                                         <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Auxiliar" />
+                                                                </f:facet>
+                                                             <ice:outputText value="#{muestras.auxiliar.nombre}" />
+
+                                                        </ice:column>
+
+                                                </ice:dataTable>
+
+                                        </div>
+
+                                        <div align="center">
+                                                <ice:dataTable rows="1" rendered="#{controlOpnciones.mostRSolidos}" >
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Fecha" />
+                                                             </f:facet>
+
+                                                            <f:facet name="footer">
+                                                                <ice:selectInputDate id="calendar5" valueChangeListener="#{controlMuestraResiduo.listarMuestrasP}" partialSubmit="true"
+                                                                 popupDateFormat="EEEEE, MM/dd/yyyy"
+                                                                 value="#{controlMuestraResiduo.fecha}" renderAsPopup="true"  />
+                                                                 <h:message style="color: red" for="calendar5"/>
+                                                             </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Hora" />
+                                                             </f:facet>
+
+                                                            <f:facet name="footer">
+                                                                <ice:inputText value="#{controlMuestraResiduo.horario}" valueChangeListener="#{controlMuestraResiduo.listarMuestrasP}" partialSubmit="true" size="6" />
+                                                             </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Residuo" />
+                                                             </f:facet>
+                                                            
+                                                            <f:facet name="footer">
+                                                                <ice:selectOneMenu value="#{controlMuestraResiduo.codRes}"  valueChangeListener="#{controlMuestraResiduo.SeleccionarRes}"
+                                                                                               partialSubmit="true"  >
+                                                                <f:selectItems value="#{controlMuestraResiduo.itemsResiduos}"/></ice:selectOneMenu>
+                                                             </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                 <ice:outputText value="Categoría" />
+                                                            </f:facet>
+                                                            <f:facet name="footer">
+                                                                <ice:outputText title="#{controlMuestraResiduo.categoria.descripcion}" value="#{controlMuestraResiduo.categoria.nombre}"  />
+                                                            </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Zona Reposo" />
+                                                            </f:facet>
+                                                            <f:facet name="footer">
+                                                                    <ice:inputText value="#{controlMuestraResiduo.zonaReposo}" size="6"/>
+                                                            </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Zona Activa" />
+                                                            </f:facet>
+                                                            <f:facet name="footer">
+                                                                    <ice:inputText value="#{controlMuestraResiduo.zonaActiva}" size="6" />
+                                                            </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Zona Bañistas" />
+                                                            </f:facet>
+                                                            <f:facet name="footer">
+                                                                    <ice:inputText value="#{controlMuestraResiduo.zonaBañistas}" size="6"/>
+                                                            </f:facet>
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Accion" />
+                                                            </f:facet>
+                                                            <f:facet name="footer">
+                                                                <ice:commandButton value="Registrar" actionListener="#{controlMuestraResiduo.registrarMuestra}"/>
+                                                            </f:facet>
+                                                    </ice:column>
+                                                </ice:dataTable>
+                                         
+                                                 <ice:dataTable var="muestrasR" rendered="#{controlOpnciones.mostRSolidos}"
+                                                                value="#{controlMuestraResiduo.listaMuestras}"
+                                                         id="tMuestrasR"
+                                                         rows="10" >
+                                                     <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Fecha" />
+                                                             </f:facet>
+
+                                                            
+                                                                <ice:outputText  value="#{muestrasR.fecha}" />
+                                                                    <!-- <ice:selectInputDate rendered="#{controlMuestraResiduo.activarMuest}" id="calendar4" popupDateFormat="EEEEE, MM/dd/yyyy"
+                                                                                          value="#{controlMuestraResiduo.fecha}" renderAsPopup="true" />
+                                                                                          <h:message style="color: red" for="calendar4"/>-->
+                                                             
+                                                    </ice:column>
+                                                     <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Horario" />
+                                                             </f:facet>
+
+                                                           
+                                                         <ice:outputText rendered="#{controlMuestraResiduo.activarEtiquM}" value="#{muestrasR.horario}" />
+                                                                     <ice:inputText rendered="#{controlMuestraResiduo.activarMuest}" value="#{muestrasR.horario}" size="8"  />
+
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Residuo" />
+                                                             </f:facet>
+
+                                                            
+                                                                <ice:outputText rendered="#{controlMuestraResiduo.activarEtiquM}" value="#{muestrasR.residuo.nombre}" />
+                                                                     <ice:inputText rendered="#{controlMuestraResiduo.activarMuest}" value="#{muestrasR.zonaActiva}" size="8" />
+                                                            
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Categoría" />
+                                                            </f:facet>
+                                                           
+                                                                <ice:outputText rendered="#{controlMuestraResiduo.activarEtiquM}" value="#{muestrasR.residuo.categoria.nombre}" />
+                                                                    <ice:inputText rendered="#{controlMuestraResiduo.activarMuest}" value="#{muestrasR.zonaActiva}" size="8" />
+                                                           
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Zona Reposo" />
+                                                            </f:facet>
+                                                            
+                                                                <ice:outputText rendered="#{controlMuestraResiduo.activarEtiquM}" value="#{muestrasR.zonaReposo}" />
+                                                                   <ice:inputText rendered="#{controlMuestraResiduo.activarMuest}" value="#{muestrasR.zonaActiva}" size="8" />
+                                                           
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Zona Activa" />
+                                                            </f:facet>
+                                                           
+                                                                    <ice:outputText rendered="#{controlMuestraResiduo.activarEtiquM}" value="#{muestrasR.zonaActiva}"  />
+                                                                    <ice:inputText rendered="#{controlMuestraResiduo.activarMuest}" value="#{muestrasR.zonaActiva}" size="8"  />
+                                                            
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Zona Bañistas" />
+                                                            </f:facet>
+                                                           
+                                                                    <ice:outputText rendered="#{controlMuestraResiduo.activarEtiquM}" value="#{muestrasR.zonaBañistas}" />
+                                                                    <ice:inputText rendered="#{controlMuestraResiduo.activarMuest}" value="#{muestrasR.zonaActiva}" size="8"  />
+                                                           
+                                                    </ice:column>
+                                                     <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Accion" />
+                                                            </f:facet>
+                                                           
+                                                                <h:commandButton rendered="#{controlMuestraResiduo.activarEtiquM}" value="Modificar" actionListener="#{controlMuestraResiduo.activarModificado}" />
+                                                                    <h:commandButton rendered="#{controlMuestraResiduo.activarMuest}" value="Guardar" actionListener="#{controlMuestraResiduo.modificarMuestra}" />
+                                                           
+                                                    </ice:column>
+                                                </ice:dataTable>
+                                            </div>
+                                        </ice:panelLayout>
+                                </h:panelGrid>
+
+                            </f:facet>
+
+
+                        </ice:panelPopup>
+                        <div style="left: 550px;position: absolute" >
+                        <ice:panelGroup >
+                            
+                            <ice:selectInputDate id="calendar2"
+                                                 popupDateFormat="EEEEE, MM/dd/yyyy"
+                                                 value="#{controlMuestraDensidad.fecha}" renderAsPopup="true"
+                                                 valueChangeListener="#{controlMuestraDensidad.ListarMuestrasFecha1}" partialSubmit="true"
+                                                 >
+                            </ice:selectInputDate>
+                            <ice:outputText value="Mustras de Densidad de Usuario" />
+                                <ice:dataTable
+                                    var="muestras"
+                                    value="#{controlMuestraDensidad.listamuestras}"
+                                     id="tabMuestras"
+                                     rows="10"
+                                     >
+
+                                    <ice:column>
+                                            <f:facet name="header">
+                                                     <ice:outputText value="Fecha" />
+                                             </f:facet>
+                                        <ice:outputText value="#{muestras.fecha}" />
+
+                                    </ice:column>
+
+                                    <ice:column groupOn="#{muestras.puntoMuestreo.descripcion}">
+                                            <f:facet name="header">
+                                                     <ice:outputText value="Punto Muestreo" />
+                                             </f:facet>
+                                        <ice:outputText value="#{muestras.puntoMuestreo.descripcion}" />
+
+                                    </ice:column>
+
+                                    <ice:column>
+                                            <f:facet name="header">
+                                                     <ice:outputText value="Horario" />
+                                            </f:facet>
+                                        <ice:outputText value="#{muestras.horario}" />
+
+                                    </ice:column>
+                                    <ice:column>
+                                            <f:facet name="header">
+                                                     <ice:outputText value="Turistas" />
+                                            </f:facet>
+                                        <ice:outputText value="#{muestras.numeroTuristas}" />
+
+                                    </ice:column>
+                                    <ice:column>
+                                            <f:facet name="header">
+                                                     <ice:outputText value="Vendedores" />
+                                            </f:facet>
+                                        <ice:outputText value="#{muestras.numeroVendedores}" />
+
+                                    </ice:column>
+                                    <ice:column>
+                                            <f:facet name="header">
+                                                     <ice:outputText value="Autoridades" />
+                                            </f:facet>
+                                        <ice:outputText value="#{muestras.numeroAutoridades}" />
+
+                                    </ice:column>
+                                     <ice:column>
+                                            <f:facet name="header">
+                                                     <ice:outputText value="Densidad" />
+                                            </f:facet>
+                                         <ice:outputText value="#{muestras.densidadUsuarios}" />
+
+                                    </ice:column>
+                                     <ice:column>
+                                            <f:facet name="header">
+                                                     <ice:outputText value="Auxiliar" />
+                                            </f:facet>
+                                         <ice:outputText value="#{muestras.auxiliar.nombre}" />
+
+                                    </ice:column>
+
+                            </ice:dataTable>
+
+                            <ice:outputText value="Mustras de Residuos Solidos" />
+                                         <ice:dataTable var="muestrasR" value="#{controlMuestraResiduo.listaMuestras}"
+                                                         id="tMuestrasRP"
+                                                         rows="10" >
+                                                     <ice:column >
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Fecha" />
+                                                             </f:facet>
+                                                                <ice:outputText  value="#{muestrasR.fecha}" />
+
+                                                    </ice:column>
+                                                    <ice:column groupOn="#{muestrasR.puntoMuestreo.descripcion}">
+                                                        <f:facet name="header">
+                                                            <ice:outputText value="Punto Muestreo" />
+                                                        </f:facet>
+                                                         <ice:outputText value="#{muestrasR.puntoMuestreo.descripcion}" />
+
+                                                    </ice:column>
+                                                     <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Horario" />
+                                                             </f:facet>
+                                                                <ice:outputText  value="#{muestrasR.horario}" />
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Residuo" />
+                                                             </f:facet>
+                                                                <ice:outputText  value="#{muestrasR.residuo.nombre}" />
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Categoría" />
+                                                            </f:facet>
+                                                                <ice:outputText  value="#{muestrasR.residuo.categoria.nombre}" />
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Zona Reposo" />
+                                                            </f:facet>
+                                                                <ice:outputText  value="#{muestrasR.zonaReposo}" />
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Zona Activa" />
+                                                            </f:facet>
+                                                                    <ice:outputText  value="#{muestrasR.zonaActiva}"  />
+                                                    </ice:column>
+                                                    <ice:column>
+                                                            <f:facet name="header">
+                                                                     <ice:outputText value="Zona Bañistas" />
+                                                            </f:facet>
+                                                                    <ice:outputText  value="#{muestrasR.zonaBañistas}" />
+                                                    </ice:column>
+                                                </ice:dataTable>
+                           
+                    </ice:panelGroup>
+                    </div>
+
+                        <ice:panelConfirmation id="saveConfirmPanel" message="Usted ha registrado exitosamente una muestra\nDesea registrar otra muestra"
+                            rendered="#{controlMuestraDensidad.showMc}"/>
+
+                    </ice:panelGroup>
+
+
+                </f:facet>
+            </ice:panelBorder>
+
+            <a href="reporteMuestraD.jsp" target="_blank">Ver reporte</a>
+ 
+        </h:form>
+
+    </h:body>
+    <h:outputStylesheet library="org.icefaces.component.skins" name="rime.css" />
+</html>
