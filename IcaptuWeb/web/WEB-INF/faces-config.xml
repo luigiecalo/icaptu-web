@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+    xmlns="http://java.sun.com/xml/ns/javaee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+        <navigation-rule>
+	<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>2</from-outcome>
+			<to-view-id>/welcomeICEfaces.xhtml</to-view-id>
+                        <redirect/>
+		</navigation-case>
+	</navigation-rule>     
+
+	<navigation-rule>
+	<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>0</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+        <navigation-rule>
+	<from-view-id>/index.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>1</from-outcome>
+			<to-view-id>/PanelPrincipal.xhtml</to-view-id>
+                        <redirect/>
+		</navigation-case>
+	</navigation-rule>
+
+    <managed-bean>
+        <managed-bean-name>controlUsuarios</managed-bean-name>
+        <managed-bean-class>Controladores.controlUsuarios</managed-bean-class>
+
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlPlayas</managed-bean-name>
+        <managed-bean-class>Controladores.controlPlayas</managed-bean-class>
+
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlPuntoMuestreo</managed-bean-name>
+        <managed-bean-class>Controladores.controlPuntoMuestreo</managed-bean-class>
+
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlMuestraDensidad</managed-bean-name>
+        <managed-bean-class>Controladores.controlMuestraDensidad</managed-bean-class>
+
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlCategoria</managed-bean-name>
+        <managed-bean-class>Controladores.controlCategoria</managed-bean-class>
+
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlResiduo</managed-bean-name>
+        <managed-bean-class>Controladores.controlResiduo</managed-bean-class>
+
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlOpnciones</managed-bean-name>
+        <managed-bean-class>Controladores.controlOpnciones</managed-bean-class>
+
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+    <managed-bean>
+        <managed-bean-name>controlMuestraResiduo</managed-bean-name>
+        <managed-bean-class>Controladores.controlMuestraResiduo</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope></managed-bean>
+</faces-config>

@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ice="http://www.icesoft.com/icefaces/component"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ace="http://www.icefaces.org/icefaces/components">
+    <h:head>
+        <link rel="stylesheet" type="text/css" href="./xmlhttp/css/rime/rime.css"/>
+        <title>ICAPTU</title>
+    </h:head>
+    <h:body styleClass="ice-skin-rime">
+        <f:view>
+        <h:form>
+
+            <ice:panelBorder width="100%" >
+                <f:facet name="north" >
+                    <ice:panelGroup style="text-align:right;color: blue; background-image: url(Imagenes/Panelplaya.jpg);height: 130px" >
+                      <ice:outputText style="color: beige" value="Sesion de: #{controlUsuarios.auxiliar.nombre}" ></ice:outputText><br />
+                      <ice:outputText style="color: beige" value="#{controlUsuarios.auxiliar.perfil}" ></ice:outputText>
+
+                      
+                    </ice:panelGroup>
+                </f:facet>
+
+                <f:facet name="west" >
+                    <ice:panelGroup style="padding:6px;width:120px ;height: 500px">
+
+                    </ice:panelGroup>
+                </f:facet>
+
+                <f:facet name="center" >
+
+                    <ice:commandLink actionListener="#{controlPlayas.visualizarPanel}" >
+                        
+                        <ice:graphicImage url="Imagenes/imenuplayaM.png">
+                        </ice:graphicImage>
+
+                    </ice:commandLink>
+                    <ice:commandLink actionListener="#{controlPuntoMuestreo.visualizarPanel}" >
+
+                        <ice:graphicImage url="Imagenes/imenupuntoM.png">
+                        </ice:graphicImage>
+
+                    </ice:commandLink>
+                    <ice:commandLink actionListener="#{controlCategoria.mostrarPanel}" >
+
+                        <ice:graphicImage url="Imagenes/icategorias.png">
+                        </ice:graphicImage>
+
+                    </ice:commandLink>
+                    <ice:commandLink actionListener="#{controlResiduo.mostrarPanel}" >
+
+                        <ice:graphicImage url="Imagenes/iresiduos.png">
+                        </ice:graphicImage>
+
+                    </ice:commandLink>
+
+                     <ice:panelPopup
+                            id="panelPlay"
+                            modal="true"
+                            rendered="#{controlPlayas.showVista}"
+                            style="top: 5px; left: 50px; width: 930px; height: 800px;  background: #FFFFFF">
+
+                            <f:facet name="header"  >
+                                <h:panelGrid id="popupHeader2" width="900px"  cellpadding="0" cellspacing="0" columns="3">
+                                    <h:graphicImage id="popupIcon2" value="Imagenes/iimuestra.png" />
+                                    <h:outputText value="Registro de Playas"/>
+                                    <h:commandButton id="popupClose2" type="button" image="Imagenes/cerrar.png"
+                                                     actionListener="#{controlPlayas.OcultarPanel}" style="cursor: pointer;"/>
+                                </h:panelGrid>
+                            </f:facet>
+                            <f:facet name="body">
+                                
+                                <h:panelGrid id="popupBody2" cellpadding="0" cellspacing="0"  >
+                                
+                                    <div style="width: 900px"  >
+
+                                        <ice:panelLayout visible="true" layout="relative" style="color: black" ><br/>
+
+                                            <table border="0" width="100%"  cellpadding="0" cellspacing="0" >
+                                                <tr>
+                                                        <td width="9%">Código</td>
+                                                        <td width="11%"><ice:inputText value="#{controlPlayas.codigo}" size="6"></ice:inputText></td>
+                                                        <td width="12%">Longitud</td>
+                                                        <td width="14%" colspan="2"><ice:inputText value="#{controlPlayas.longitud}" size="6"></ice:inputText></td>
+                                                        <td width="26%">Imagen</td>
+                                                        <td width="18%"><ace:fileEntry useOriginalFilename="true"
+                                                                                       relativePath="/web/imagenes/"
+                                                                                       fileEntryListener="#{controlPlayas.listener}" ></ace:fileEntry></td>
+                                                        <td width="7%"><h:commandButton value="Cargar"/></td>
+                                                </tr>
+                                                <tr>
+                                                        <td width="9%">Ancho seco</td>
+                                                        <td width="11%"><ice:inputText value="#{controlPlayas.anchoSeco}" size="6"></ice:inputText></td>
+                                                        <td width="9%">Ancho Sumergido</td>
+                                                        <td width="18%" colspan="2"><ice:inputText value="#{controlPlayas.anchoSumergido}" size="6"></ice:inputText></td>
+                                                        <td width="52%" colspan="3" rowspan="5"><ice:graphicImage width="480" height="300"
+                                                                                                                  value="imagenPlaya.jsp?codigo=#{controlPlayas.codigo}">
+                                                                                                </ice:graphicImage></td>
+                                                </tr>
+                                                <tr>
+                                                        <td width="9%">Nombre</td>
+                                                        <td colspan="4"><ice:inputText value="#{controlPlayas.nombre}" size="47" ></ice:inputText></td>
+                                                </tr>
+                                                <tr>
+                                                        <td width="9%">Descripción</td>
+                                                        <td colspan="4"><ice:inputTextarea value="#{controlPlayas.descripcion}" cols="37" rows="3" ></ice:inputTextarea></td>
+                                                </tr>
+                                                <tr>
+                                                        <td width="9%">Ubicación</td>
+                                                        <td width="9%">Latitud</td>
+                                                        <td width="12%"><ice:inputText value="#{controlPlayas.latitudM}" size="6"></ice:inputText></td>
+                                                        <td width="6%">Longitud</td>
+                                                        <td width="8%"><ice:inputText value="#{controlPlayas.longitudM}" size="6"></ice:inputText></td>
+                                                </tr>
+                                                <tr>
+                                                        <td width="47%" colspan="5"><ice:commandButton type="submit" value="Registrar" action="#{controlPlayas.registrarPlaya}" ></ice:commandButton></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="112%" colspan="8"><ice:gMap address="Cartagena,Colombia" rendered="true" latitude="#{controlPlayas.latitudM}"
+                                                                                           longitude="#{controlPlayas.longitudM}"  zoomLevel="8" style="width: 900px;height: 400px" >
+                                                                                    </ice:gMap></td>
+                                                </tr>
+                                            </table>
+                                        </ice:panelLayout>
+
+                                    </div>
+                                     
+                                </h:panelGrid>
+
+                            </f:facet>
+                        </ice:panelPopup>
+                    
+                     <ice:panelPopup
+                            id="panelPlay1"
+                            modal="true"
+                            rendered="#{controlPuntoMuestreo.mostPanel}"
+                            style="top: 5px; left: 50px; width: 900px; height: 650px;  background: #FFFFFF;">
+
+                            <f:facet name="header"  >
+                                <h:panelGrid id="popupHeader3" width="900px"  cellpadding="0" cellspacing="0" columns="3">
+                                    <h:graphicImage id="popupIcon3" value="Imagenes/iimuestra.png" />
+                                    <h:outputText value="Gestion de Puntos de Muestreo"/>
+                                    <h:commandButton id="popupClose3" type="button" image="Imagenes/cerrar.png"
+                                                     actionListener="#{controlPuntoMuestreo.ocultarPanel}" style="cursor: pointer;"/>
+                                </h:panelGrid>
+                            </f:facet>
+                            <f:facet name="body">
+                  
+                                <ice:panelLayout layout="absolute" style="width:198px;height: 600px;background-color:palegoldenrod">
+
+                                                            <ice:panelPositioned   var="playa" value="#{controlPlayas.playas}" constraint="horizontal" >
+                                                        <h:panelGrid columns="3" >
+                                                            <h:panelGroup >
+                                                                <h:commandLink actionListener="#{controlPuntoMuestreo.asignarPlaya}">
+                                                                            <div style="width: 120px; height: 90px; border: 3px double #0000FF;background-color: floralwhite">
+                                                                            <ice:graphicImage width="120" height="60" value="imagenPlaya.jsp?codigo=#{playa.codigo}"></ice:graphicImage><br />
+                                                                            <ice:outputText value="#{playa.ubicacion}" ></ice:outputText><br />
+                                                                            <f:param name="codplaya" value="#{playa.codigo}"/>
+                                                                            </div>
+                                                                        </h:commandLink>
+
+                                                                </h:panelGroup>
+                                                            </h:panelGrid>
+                                                      </ice:panelPositioned>
+                                        
+                                                        </ice:panelLayout>
+
+                                <ice:panelLayout style="left:200px;width:700px;height:700px;background-color: inherit " >
+
+                                    <div>
+                                        <table border="0" width="24%">
+                                                <tr>
+                                                        <td width="82">Playa</td>
+                                                        <td><ice:inputText size="38" value="#{controlPuntoMuestreo.cplaya}" /></td>
+                                                </tr>
+                                                <tr>
+                                                        <td width="82">Código</td>
+                                                        <td><ice:inputText size="38" value="#{controlPuntoMuestreo.codigo}" /></td>
+                                                </tr>
+                                                <tr>
+                                                        <td width="82">Descripción</td>
+                                                        <td><ice:inputTextarea cols="30" rows="3" value="#{controlPuntoMuestreo.descripcion}" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2"><ice:commandButton type="submit" value="Registrar" action="#{controlPuntoMuestreo.registrarPunto}" ></ice:commandButton></td>
+                                                </tr>
+                                        </table>
+
+                                    </div>
+
+                                </ice:panelLayout>
+                            </f:facet>
+                        </ice:panelPopup>
+
+
+                     <ice:panelPopup
+                            id="panelPlay2"
+                            modal="true"
+                            rendered="#{controlCategoria.mostPanel}"
+                            style="top: 5px; left: 400px; width: 440px; height: 420px;  background: #FFFFFF;">
+
+                            <f:facet name="header"  >
+                                <h:panelGrid id="popupHeader4" width="400px"  cellpadding="0" cellspacing="0" columns="3">
+                                    <h:graphicImage id="popupIcon4" value="Imagenes/iimuestra.png" />
+                                    <h:outputText value="Gestion de Categorias"/>
+                                    <h:commandButton id="popupClose4" type="button" image="Imagenes/cerrar.png"
+                                                     actionListener="#{controlCategoria.ocultarPanel}" style="cursor: pointer;"/>
+                                </h:panelGrid>
+                            </f:facet>
+                            <f:facet name="body">
+                                <ice:panelGroup>
+
+                                <div>
+                                    Codigo:<ice:inputText value="#{controlCategoria.codigo}" > </ice:inputText><br />
+                                    Nombre:<ice:inputText value="#{controlCategoria.nombre}" > </ice:inputText><br />
+                                    Descripcion:<ice:inputTextarea cols="30" rows="3" value="#{controlCategoria.descripcion}" > </ice:inputTextarea><br />
+                                    <ice:commandButton value="Registrar" actionListener="#{controlCategoria.registrarCategoria}" > </ice:commandButton>
+                                </div>
+                                    <div style="text-align: center" >
+                                        
+                                        <ice:panelGroup style="padding:6px;width:400px ;height: 350px">
+                                            
+                                        <ice:dataTable var="categorias"
+                                           value="#{controlCategoria.listacategoria}"
+                                           id="tcategorias"
+                                           rows="10">
+
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Codigo" />
+                                                                 </f:facet>
+                                                            <ice:outputText value="#{categorias.codigo}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Nombre" />
+                                                                </f:facet>
+                                                            <ice:outputText value="#{categorias.nombre}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="descripcion" />
+                                                                </f:facet>
+                                                            <ice:outputText value="#{categorias.descripcion}" />
+
+                                                        </ice:column>                                                       
+                                                </ice:dataTable>
+                                            
+                                            </ice:panelGroup>
+                                </div>
+                               </ice:panelGroup>
+                            </f:facet>
+                        </ice:panelPopup>
+
+
+                     <ice:panelPopup
+                            id="panelPlay3"
+                            modal="true"
+
+                            rendered="#{controlResiduo.mostPanel}"
+                            style="top: 5px; left: 400px; width: 440px; height: 430px;  background: #FFFFFF;">
+
+                            <f:facet name="header" >
+                                <h:panelGrid id="popupHeader5" width="400px"  cellpadding="0" cellspacing="0" columns="3" >
+                                    <h:graphicImage id="popupIcon5" value="Imagenes/iimuestra.png" />
+                                    <h:outputText value="Gestion de Residuos"/>
+                                    <h:commandButton  id="popupClose5" type="button" image="Imagenes/cerrar.png"
+                                                     actionListener="#{controlResiduo.ocultarPanel}" style="cursor: pointer;"/>
+                                </h:panelGrid>
+                            </f:facet>
+                            <f:facet name="body">
+
+
+                                <div>
+                                    Categoria:<ice:inputText value="#{controlResiduo.nombrec}" actionListener="#{controlResiduo.buscarcategorias}" partialSubmit="true" ></ice:inputText><br />
+
+
+                                    <ice:outputText rendered="#{controlResiduo.mostEti}" style="background-color: darkorange" title="#{controlResiduo.categoria.descripcion}" value="#{controlResiduo.categoria.nombre}" > </ice:outputText>
+                                    
+                                    <ice:dataTable var="categ"
+                                                   value="#{controlResiduo.categorias}"
+                                                       id="tcateg"
+                                                       rows="3"
+                                                       rendered="#{controlResiduo.mostTabc}">
+                                                        <ice:column>
+                                                            <ice:rowSelector clickListener="#{controlResiduo.asignarCategoria}">
+                                                                <f:param name="codcat" value="#{categ.codigo}"></f:param></ice:rowSelector>
+                                                            <f:facet name="header">
+                                                                         <ice:outputText value="Codigo" />
+                                                                 </f:facet>
+                                                            <ice:outputText value="#{categ.codigo}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Nombre" />
+                                                                 </f:facet>
+                                                            <ice:outputText value="#{categ.nombre}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Nombre" />
+                                                                </f:facet>
+                                                            <ice:outputText value="#{categ.descripcion}" />
+                                                        </ice:column>                                                   
+                                                </ice:dataTable>
+                                    <ice:outputText value="#{controlResiduo.categoria.nombre}"/><br/>
+                                    Codigo:<ice:inputText value="#{controlResiduo.codigo}" > </ice:inputText><br />
+                                    Nombre:<ice:inputText value="#{controlResiduo.nombre}" > </ice:inputText><br />
+                                    Descripcion:<ice:inputTextarea cols="30" rows="3" value="#{controlResiduo.descripcion}" > </ice:inputTextarea><br />
+                                    <ice:commandButton value="Registrar" actionListener="#{controlResiduo.RegistrarResiduo}" > </ice:commandButton>
+                                </div>
+                                    <div style="text-align: center" >
+
+                                        <ice:panelGroup style="padding:6px;width:400px ;height: 350px">
+
+                                        <ice:dataTable var="residuo"
+                                                       value="#{controlResiduo.listaresiduo}"
+                                                       id="tresiduos"
+                                                       rows="6">
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Categoria" />
+                                                                 </f:facet>
+                                                            <ice:outputText value="#{residuo.categoria.nombre}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Codigo" />
+                                                                 </f:facet>
+                                                            <ice:outputText value="#{residuo.codigo}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="Nombre" />
+                                                                </f:facet>
+                                                            <ice:outputText value="#{residuo.nombre}" />
+
+                                                        </ice:column>
+                                                        <ice:column>
+                                                                <f:facet name="header">
+                                                                         <ice:outputText value="descripcion" />
+                                                                </f:facet>
+                                                            <ice:outputText value="#{residuo.descripcion}" />
+
+                                                        </ice:column>
+                                                </ice:dataTable>
+
+                                            </ice:panelGroup>
+                                </div>
+
+                            </f:facet>
+                        </ice:panelPopup>
+
+                </f:facet>
+
+            </ice:panelBorder>
+
+
+
+        </h:form>
+        </f:view>
+    </h:body>
+    <h:outputStylesheet library="org.icefaces.component.skins" name="rime.css" />
+</html>
